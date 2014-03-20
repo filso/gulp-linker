@@ -1,9 +1,6 @@
 /*
- * grunt-scriptlinker
- * https://github.com/scott-laursen/grunt-scriptlinker
- *
- * Copyright (c) 2013 scott-laursen
- * Licensed under the MIT license.
+ * gulp-linker
+ * https://github.com/filipsobczak/grunt-scriptlinker
  */
 
 'use strict';

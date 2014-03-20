@@ -3,43 +3,36 @@
 > Autoinsert script tags (or other filebased tags) in an html file
 
 ## Getting Started
-This plugin requires Grunt `~0.4.x`
 
-When the task is run the destination file(s) is updated with script tags pointing to all the source files. The reason this plugin was built was to automate the process of inserting script tags when building large web apps.
+When the task is run the destination file(s) is updated with script tags pointing to all the source files. The reason
+this plugin was built was to automate the process of inserting script tags when building large web apps.
 
 ```shell
-npm install grunt-sails-linker --save-dev
+npm install gulp-linker --save-dev
 ```
 
-Once the plugin has been installed, it may be enabled inside your Gruntfile with this line of JavaScript:
-
-```js
-grunt.loadNpmTasks('grunt-sails-linker');
-```
-
-## The "sails-linker" task
+## The "gulp-linker" task
 
 ### Overview
-In your project's Gruntfile, add a section named `sails-linker` to the data object passed into `grunt.initConfig()`.
+In your project's gulpfile.js, add use gulp-linker stream.
 
 ```js
-grunt.initConfig({
-  'sails-linker': {
-    defaultOptions: {
-      options: {
-        startTag: '<!--SCRIPTS-->',
-        endTag: '<!--SCRIPTS END-->',
-        fileTmpl: '<script src="%s"></script>',
-        appRoot: 'app/'
-      },
-      files: {
-        // Target-specific file lists and/or options go here.
-        'app/index.html': ['app/scripts/**/*.js']
-      },
-    },
-  },
-})
+var linker = require('gulp-linker'),
+
+gulp.src(paths.linkedFile)
+  .pipe(linker({
+    scripts: paths.linkedJS,
+    startTag: '<!--SCRIPTS-->',
+    endTag: '<!--SCRIPTS END-->',
+    fileTmpl: '\n<script src="%s"></script>',
+    appRoot: 'test/'
+  }))
+  .pipe(gulp.dest('out'));
 ```
+
+```watch
+If you, it will update your index automatically on every change,
+so you won't have to run task ever again.
 
 ### Options
 
