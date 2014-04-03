@@ -25,14 +25,16 @@
     "grunt-contrib-nodeunit": "0.1.2",
     "grunt": "0.4.0rc7",
     "gulp-clean": "~0.2.4",
-    "gulp-jshint": "~1.5.0",
+    "gulp-jshint": "~1.5.0"
+  },
+  "dependencies" : {
     "gulp-nodeunit": "0.0.3",
     "through2": "~0.4.1",
     "gulp-util": "~2.2.14",
     "xtend": "~2.1.2",
     "gulp-concat": "~2.1.7",
     "glob": "~3.2.9"
-  },
+  }
   "keywords": [
     "gulpplugin"
   ],
