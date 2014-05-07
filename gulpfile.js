@@ -9,13 +9,13 @@ var gulp = require('gulp'),
   jshint = require('gulp-jshint'),
   nodeunit = require('gulp-nodeunit'),
   concat = require('gulp-concat'),
-  linker = require('./tasks/scriptlinker.js'),
+  linker = require('./'),
   clean = require('gulp-clean');
 
 
 
 var paths = {
-  scripts: ['tasks/scriptlinker.js', 'test/*_test.js'],
+  scripts: ['*.js', 'test/*.js'],
   tests: 'test/*_test.js',
   linkedFile: 'test/fixtures/file.html',
   linkedJS: 'test/fixtures/*.js'
@@ -37,24 +37,19 @@ gulp.task('linker', function() {
       fileTmpl: '\n<script src="%s"></script>',
       appRoot: 'test/'
     }))
-	  .pipe(gulp.dest('out'));
+	  .pipe(gulp.dest('tmp'));
 });
 
 gulp.task('clean', function() {
-  gulp.src('tmp', {read: false })
+  gulp.src([ 'tmp', paths.testResults ], {read: false })
     .pipe(clean());
 });
 
-gulp.task('nodeunit', function() {
+gulp.task('nodeunit', [ 'linker' ], function() {
   gulp.src(paths.tests)
-    .pipe(nodeunit({
-      reporter: 'junit',
-      reporterOptions: {
-        output: 'test'
-      }
-    }));
+    .pipe(nodeunit());
 });
 
-gulp.task('test', ['clean', 'linker', 'nodeunit']);
+gulp.task('test', ['clean', 'nodeunit']);
 
 gulp.task('default', ['jshint', 'test']);
