@@ -8,7 +8,6 @@
 var gulp = require('gulp'),
   jshint = require('gulp-jshint'),
   nodeunit = require('gulp-nodeunit'),
-  concat = require('gulp-concat'),
   linker = require('./'),
   clean = require('gulp-clean');
 
