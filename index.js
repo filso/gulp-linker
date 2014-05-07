@@ -35,15 +35,14 @@ module.exports = function(options) {
     var start, end;
     var newPage, page = String(file.contents);
     start = page.indexOf(options.startTag);
-
     end = page.indexOf(options.endTag, start);
+
     if (start === -1 || end === -1 || start >= end) {
       return;
     } else {
       var padding = '';
       var ind = start - 1;
-      // TODO: Fix this hack
-      while (page.charAt(ind) === ' ' || page.charAt(ind) === '  ') {
+      while (/[^\S\n]/.test(page.charAt(ind))){
         padding += page.charAt(ind);
         ind -= 1;
       }

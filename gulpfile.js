@@ -8,15 +8,15 @@
 var gulp = require('gulp'),
   jshint = require('gulp-jshint'),
   nodeunit = require('gulp-nodeunit'),
-  concat = require('gulp-concat'),
-  linker = require('./tasks/scriptlinker.js'),
+  linker = require('./'),
   clean = require('gulp-clean');
 
 
 
 var paths = {
-  scripts: ['tasks/scriptlinker.js', 'test/*_test.js'],
+  scripts: ['*.js', 'test/*.js'],
   tests: 'test/*_test.js',
+  testResultsDir: 'test/actual/',
   linkedFile: 'test/fixtures/file.html',
   linkedJS: 'test/fixtures/*.js'
 };
@@ -29,32 +29,27 @@ gulp.task('jshint', function() {
 });
 
 gulp.task('linker', function() {
-	gulp.src(paths.linkedFile)
+	return gulp.src(paths.linkedFile)
 	  .pipe(linker({
 			scripts: paths.linkedJS,
       startTag: '<!--SCRIPTS-->',
       endTag: '<!--SCRIPTS END-->',
-      fileTmpl: '\n<script src="%s"></script>',
+      fileTmpl: '<script src="%s"></script>',
       appRoot: 'test/'
     }))
-	  .pipe(gulp.dest('out'));
+	  .pipe(gulp.dest(paths.testResultsDir));
 });
 
 gulp.task('clean', function() {
-  gulp.src('tmp', {read: false })
+  return gulp.src(paths.testResultsDir, {read: false })
     .pipe(clean());
 });
 
-gulp.task('nodeunit', function() {
-  gulp.src(paths.tests)
-    .pipe(nodeunit({
-      reporter: 'junit',
-      reporterOptions: {
-        output: 'test'
-      }
-    }));
+gulp.task('nodeunit', [ 'linker' ], function() {
+  return gulp.src(paths.tests)
+    .pipe(nodeunit());
 });
 
-gulp.task('test', ['clean', 'linker', 'nodeunit']);
+gulp.task('test', ['clean', 'nodeunit']);
 
 gulp.task('default', ['jshint', 'test']);
