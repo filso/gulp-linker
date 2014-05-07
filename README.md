@@ -1,11 +1,11 @@
-# grunt-sails-linker
+# gulp-linker
 
-> Autoinsert script tags (or other filebased tags) in an html file
+> Automatically insert script tags (or other file-based tags) in an HTML file.
+> Based on [grunt-sails-linker](https://github.com/Zolmeister/grunt-sails-linker)
 
 ## Getting Started
 
-When the task is run the destination file(s) is updated with script tags pointing to all the source files. The reason
-this plugin was built was to automate the process of inserting script tags when building large web apps.
+When the task is run the destination file is updated with script tags pointing to all the source files. The reason this plugin was built was to automate the process of inserting script tags when building large web apps.  It can also update multiple files.
 
 ```shell
 npm install gulp-linker --save-dev
@@ -14,25 +14,27 @@ npm install gulp-linker --save-dev
 ## The "gulp-linker" task
 
 ### Overview
-In your project's gulpfile.js, add use gulp-linker stream.
+In your project's `gulpfile.js` use the gulp-linker stream.
 
 ```js
 var linker = require('gulp-linker'),
 
-gulp.src(paths.linkedFile)
+// Read templates
+gulp.src('templates/*.html')
+  // Link the JavaScript
   .pipe(linker({
-    scripts: paths.linkedJS,
+    scripts: [ "www/js/*.js " ],
     startTag: '<!--SCRIPTS-->',
     endTag: '<!--SCRIPTS END-->',
-    fileTmpl: '\n<script src="%s"></script>',
-    appRoot: 'test/'
+    fileTmpl: '<script src="%s"></script>',
+    appRoot: 'www/'
   }))
-  .pipe(gulp.dest('out'));
+  // Write modified files to www/
+  .pipe(gulp.dest('www/'));
 ```
 
 ```watch
-If you, it will update your index automatically on every change,
-so you won't have to run task ever again.
+If you use also use gulp.watch or gulp-watch, you are able to write a task that will update your HTML automatically on every change, so you won't have to run the individual task ever again.
 
 ### Options
 
@@ -64,5 +66,5 @@ The root of the application. Script links are relative from this folder.
 Type: `Boolean`
 Default value: `false`
 
-Reference files using a relative url.
+Reference files using a relative URL.
 
