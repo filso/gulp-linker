@@ -1,7 +1,7 @@
 {
   "name": "gulp-linker",
   "description": "Autoinsert script tags in an html file",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "homepage": "https://github.com/filipsobczak/gulp-linker",
   "contributors": [
     "Filip Sobczak <filsob@gmail.com> (http://filipsobczak.com)",
@@ -27,7 +27,8 @@
     "through2": "~0.4.1",
     "gulp-util": "~2.2.14",
     "xtend": "~2.1.2",
-    "glob": "~3.2.9"
+    "glob": "~3.2.9",
+    "lodash": "~2.4.1"
   },
   "keywords": [
     "gulpplugin"
