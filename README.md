@@ -1,3 +1,6 @@
+## Depracated -> gulp-inject
+This is depracated now. Please use awesome **gulp-inject** https://github.com/klei/gulp-inject
+
 # gulp-linker
 
 > Automatically insert script tags (or other file-based tags) in an HTML file.
